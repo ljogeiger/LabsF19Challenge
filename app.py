@@ -6,8 +6,9 @@ app = Flask(__name__)
 
 app.secret_key = '772f2253fd3a4c2524a93c70aefeac2e'
 
-base_url = "https://density.adicu.com/"
-token = ""
+base_url = "http://density.adicu.com/"
+building_to_id = {"Avery": "124", "Butler": "115", "East Asian Library": "97", "John Jay": "153",
+                  "Lehman Library": "109", "Lerner": "101", "Northwest Corner Building": "99", "Uris": "2"}
 
 
 @app.route('/', methods=['GET'])
@@ -45,9 +46,9 @@ def getData():
         flash("" + building + str(type(number)), 'success')
         if number is "":
             json = requests.get(base_url + "latest/building/" +
-                                building + "?auth_token=" + token)
+                                building_to_id[building] + "?auth_token=" + token)
             flash(base_url + "latest/building/" +
-                  building + "?auth_token=" + token, 'success')
+                  building_to_id[building] + "?auth_token=" + token, 'success')
         else:
             json = requests.get(base_url + "latest/building/" +
                                 number + "?auth_token=" + token)
