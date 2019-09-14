@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, request, flash, url_for, session
+from flask import Flask, render_template, redirect, request, flash, url_for, session, jsonify
+import json
 import requests
 import sys
 
@@ -43,16 +44,25 @@ def getData():
     if request.method == 'POST':
         building = request.form['text'].strip().title()
         number = request.form['number'].strip()
-        flash("" + building + str(type(number)), 'success')
+        # flash("" + building + str(type(number)), 'success')
         if number is "":
-            json = requests.get(base_url + "latest/building/" +
-                                building_to_id[building] + "?auth_token=" + token)
-            flash(base_url + "latest/building/" +
-                  building_to_id[building] + "?auth_token=" + token, 'success')
+            try:
+                data = requests.get(base_url + "latest/building/" +
+                                    building_to_id[building] + "?auth_token=" + token)
+                # flash(base_url + "latest/building/" +
+                #       building_to_id[building] + "?auth_token=" + token, 'success')
+                data_json = data.json()
+                end_list = []
+                for item in data_json["data"]:
+                    building = "{} is {}% full".format(
+                        item["building_name"], item["percent_full"])
+                    end_list.append(building)
+            except KeyError:
+                end_list = ["No buildings found"]
         else:
-            json = requests.get(base_url + "latest/building/" +
+            data = requests.get(base_url + "latest/building/" +
                                 number + "?auth_token=" + token)
-        return render_template('data.html')
+        return render_template('response.html', response=end_list)
     elif request.method == 'GET':
         return render_template('data.html')
 

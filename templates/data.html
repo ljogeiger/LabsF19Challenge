@@ -37,7 +37,7 @@
             <!-- NavBar Menu -->
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <!-- Put Menu Stuff Here -->
+                    <li><a href="{{url_for('enterToken')}}">Back</a></li>
                 </ul>
             </nav><!-- #nav-menu-container -->
         </div>
@@ -68,12 +68,12 @@
                 <h1>Please enter the building or number you want to search for</h1>
                 <form method="POST">
                     <div>
-                      <h3 style="color:white">Building</h3>
-                      <input name="text">
+                        <h3 style="color:white">Building</h3>
+                        <input name="text">
                     </div>
                     <div>
-                      <h3 style="color:white">Number</h3>
-                      <input name="number">
+                        <h3 style="color:white">Number</h3>
+                        <input name="number">
                     </div>
                     <input type="submit" class="btn-get-started" style="color:black">
                 </form>
