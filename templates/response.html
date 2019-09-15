@@ -14,6 +14,12 @@
     <link href="../static/lib/animate/animate.min.css" rel="stylesheet">
     <!-- JQuery JS -->
     <script src="../static/lib/jquery/jquery.min.js"></script>
+    <!-- Moment JS -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <!-- Tempus Dominus JS + CSS for Datetimepicker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css">
     <!-- Main Stylesheet File -->
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
@@ -31,7 +37,7 @@
             <!-- NavBar Menu -->
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <!-- Put Menu Stuff Here -->
+                     <li><a href="{{url_for('getData')}}">Back</a></li>
                 </ul>
             </nav><!-- #nav-menu-container -->
         </div>
@@ -39,20 +45,42 @@
     <!-- Content -->
     <!-- Main content -->
     <section id="hero">
-    <div class="hero-container">
-        <div class="main-content fadeInDown">
-            <h1>Welcome to my ADI Labs Application</h1>
-            <h2>Please get your access token below and then come back and enter it.</h2>
-            <a href="{{ url_for('getAccessToken') }}" class="btn-get-started">Get Access Token</a>
-            <a href="{{ url_for('enterToken') }}" class="btn-get-started">Enter Access Token</a>
+        <div class="hero-container">
+            <!-- Handles any alerts -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col">
+                        <div class="text-center alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="main-content fadeInDown">
+                {% for building in response %}
+                <div class="response">
+                  <h2>{{ building }}</h2>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
     <!-- JavaScript Libraries -->
     <script src="../static/lib/jquery/jquery-migrate.min.js"></script>
     <script src="../static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/easing/easing.min.js"></script>
     <script src="../static/lib/wow/wow.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
     <script src="../static/lib/counterup/counterup.min.js"></script>
+    <script src="../static/lib/superfish/hoverIntent.js"></script>
     <script src="../static/lib/superfish/superfish.min.js"></script>
     <!-- Template Main Javascript File -->
     <script src="../static/js/main.js"></script>
